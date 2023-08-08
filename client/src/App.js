@@ -5,6 +5,7 @@ import Owners from "./components/Owners";
 import Sitters from "./components/Sitters";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import SearchSitters from "./components/SearchSitters";
 
 
 function App() {
@@ -12,29 +13,24 @@ function App() {
 
 
   return (
-    <div style={{ backgroundImage: `url(${HomepageImage})`, 
-                      backgroundRepeat: "no-repeat", 
-                      backgroundSize: "cover"}}>
-      {/* <img style={{ backgroundImage:`url(${HomepageImage})`, backgroundRepeat:"no-repeat",backgroundSize:"contain" }} /> */}
-
+    <div class="container-fluid bg-body"
+      style={{
+        backgroundImage: `url(${HomepageImage})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover"
+      }}>
+      
       <Navbar />
 
       <main>
-        <h1><center>Your Furry Friend's Perfect Stay</center></h1>
-        <h3><center>Book your pet's dream sitter and dog walkers!</center></h3>
+        <h1 class="text-light">Your Furry Friend's Perfect Stay</h1>
+        <h3 class="text-light">Book your pet's dream sitter and dog walkers!</h3>
 
-        <h2>Owners</h2>
-        <Owners />
-        
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
         <br></br>
 
-        <h2>Sitters</h2>
-        <Sitters />
+        <SearchSitters />
+
+        <br></br>       
 
       </main>
       <Footer />

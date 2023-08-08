@@ -9,7 +9,7 @@ function Footer() {
     <footer class="footer mt-auto py-3 bg-light fixed-bottom">
     
       <div class="container">
-        <span class="text-muted"><center>Project created for Lighthouse Labs finals!</center></span>
+        <span class="text-muted"><center>Project created for Lighthouse Labs Webdevelopment Bootcamp!</center></span>
       </div>
     </footer>
   )
