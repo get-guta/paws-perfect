@@ -47,8 +47,8 @@ function MainNavBar() {
             Bookings
           </Button>
 
-          <Button bg="light" data-bs-theme="light" variant="light" href="/jobs">
-            Join the Team
+          <Button bg="light" data-bs-theme="light" variant="light" href="/registration">
+            Register
           </Button>
 
           <Button

@@ -43,10 +43,17 @@ router.put("/owners/:id", async(req, res) => {
 /* REGISTER an owner */
 router.post("/owners/register", async (req, res) => {
   try {
+    console.log("REQ", req.body.sub_id);
+    const existingOwner = await checkOwner(req.body.sub_id);
+    if (existingOwner) {
+      throw new Error("Sorry, this pet owner already exists"); 
+
+    }
     const newOwner = await addOwner(req.body);
-    res.json(newOwner);
+    res.json({ status: 'SUCCESS', body: newOwner } );
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    res.json({status: 'ERROR', body: 'USER EXISTS'});
   }
 });
 

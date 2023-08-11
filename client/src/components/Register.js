@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-const Profile = () => {
+const Register = () => {
   const { user, isAuthenticated } = useAuth0();
   const [userInfo, setUserInfo] = useState(null);
 
@@ -23,21 +23,11 @@ const Profile = () => {
   };  
 
   return(
-      <div class="profile">
-         { isAuthenticated && (
 
-            <article>
-              {/* {JSON.stringify(user)} */}
-              <h2>{user?.name}</h2>
-              <ul>
-                {Object.keys(user).map((objectKey, i) => <li key={i}>{objectKey}:{user[objectKey]}</li>)}
-              </ul>
-            </article>
-          )}
-      <div/>
+    <div>
 
 
-     {/* {!userInfo ?  (
+     {!userInfo ?  (
 
       <div class="register-links">
         <h2>register as a pet owner</h2>
@@ -49,12 +39,12 @@ const Profile = () => {
       </div>
      ) : (
         <Link to="/bookings">Your Bookings</Link>
-     )} */}
+     )}
       </div>
 
     )
 
 }
 
-export default Profile
+export default Register
 

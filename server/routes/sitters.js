@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { database } = require("../db/connection");
 const { addSitter, getSitterById, updateSitterById, getSitters } = require('../db/queries/sitters');
-const {getBookingBySitterId} = require('../helpers');
+const {getBookingBySitterId, checkSitter} = require('../helpers');
 
 
 /* GET all sitters */
@@ -40,10 +40,18 @@ router.put("/sitters/:id", async(req, res) => {
 /* REGISTER a sitter */
 router.post("/sitters/register", async (req, res) => {
   try {
+    //console.log("REQ", req.body.sub_id);
+    const existingSitter = await checkSitter(req.body.sub_id);
+    if (existingSitter) {
+      throw new Error("Sorry, this pet sitter already exists"); 
+
+    }
     const newSitter = await addSitter(req.body);
-    res.json(newSitter);
+    res.json({ status: 'SUCCESS', body: newSitter } );
+
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    res.json({status: 'ERROR', body: 'USER EXISTS'});
   }
 });
 

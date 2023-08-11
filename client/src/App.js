@@ -8,6 +8,7 @@ import Profile from './components/Profile';
 import Home from './components/Home';
 import Contact from './components/Contact';
 import Bookings from './components/Bookings';
+import Register from './components/Register';
 import FormOwners from './components/FormOwners';
 import FormSitters from './components/FormSitters';
 import Navbar from "react-bootstrap/Navbar";
@@ -33,6 +34,7 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/bookings" element={<Bookings />} />
+        <Route path="/registration" element={<Register />} />
         <Route path="/register-owner" element={<FormOwners />} />
         <Route path="/register-sitter" element={<FormSitters />} />
         <Route path="/owners" element={<PetSitterCalendar />} />

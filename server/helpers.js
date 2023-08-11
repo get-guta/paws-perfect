@@ -156,12 +156,12 @@ const addSitter = async ({
   photo_url,
   email,
   sub_id,
-  accepted_pet_type,
-  availability_dates
+  accepted_pet_type
+  //availability_dates
 }) => {
   try {
     const query =
-      "INSERT INTO sitters (first_name, last_name, photo_url, email, sub_id, accepted_pet_type, availability_dates) VALUES ($1, $2, $3, $4, $5, $6, $7)";
+      "INSERT INTO sitters (first_name, last_name, photo_url, email, sub_id, accepted_pet_type) VALUES ($1, $2, $3, $4, $5, $6)";
     const values = [
       first_name,
       last_name,
@@ -170,13 +170,16 @@ const addSitter = async ({
       sub_id,
       accepted_pet_type,
       availability_dates,
+
     ];
+    console.log("TESTING ADDSITTER", query);
     const newSitter = await database.query(query, values);
     return json(newSitter);
   } catch (error) {
     console.error(error);
   }
 };
+
 
 
 // Get booking requests by sitter_id
@@ -230,6 +233,37 @@ const createBooking = async (booking) => {
   return result.rows[0];
 }
 
+// Function to check if a user in either table
+const checkOwner = async(sub_id) => {  
+  try {    
+
+    // Search for the user in owners table
+    let result = await database.query(`SELECT * FROM owners WHERE sub_id = $1`, [sub_id]);
+    // console.log("Result from owners table", result);
+    if (result.rowCount > 0) {
+      throw new Error("Sorry, this pet owner already exists");  
+    }     
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const checkSitter = async(sub_id) => {  
+  try {    
+
+    // Search for the user in owners table
+    let result = await database.query(`SELECT * FROM sitters WHERE sub_id = $1`, [sub_id]);
+    // console.log("Result from owners table", result);
+    if (result.rowCount > 0) {
+      return result.rows[0];  
+    }     
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 module.exports = {
   sendNewBookingNotification,
   findOwnerInBooking,
@@ -242,5 +276,9 @@ module.exports = {
   createBooking,
   searchSittersbyDateRange,
   dogSitters,
-  catSitters
+  catSitters,
+  addSitter,
+  checkOwner,
+  checkSitter
+
 };
