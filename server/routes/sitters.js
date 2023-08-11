@@ -2,14 +2,18 @@ const express = require('express');
 const router = express.Router();
 const { database } = require("../db/connection");
 const { addSitter, getSitterById, updateSitterById, getSitters } = require('../db/queries/sitters');
-const {getBookingBySitterId} = require('../helpers');
+const {getBookingBySitterId, searchSittersbyDateRange} = require('../helpers');
 
 
 /* GET all sitters */
 router.get('/sitters', async (req, res) => {
   try {
-    const allSitters = await getSitters();
-    res.json(allSitters);    
+    // const allSitters = await getSitters();
+    // res.json(allSitters);    
+    console.log(
+      "available sitters",
+      await searchSittersbyDateRange("2023-08-16", "2023-08-26")
+    );
   } catch (error) {
     console.log(error.message);
   }  

@@ -155,28 +155,53 @@ const sendRejectedBookingNotification = async (receiver) => {
 };
 
 // GET all available sitters by date range
-const searchSittersbyDateRange = async (date_start, date_end) => {
-  try {
-    const startDate = await database.query(
-      `SELECT * FROM sitters WHERE availability_dates @> ARRAY[$1]::date[];`,
-      [date_start]
-    );
-    const endDate = await database.query(
-      `SELECT * FROM sitters WHERE availability_dates @> ARRAY[$1]::date[];`,
-      [date_end]
-    );
-    const availableSitters = await database.query(
-      `SELECT * FROM sitters WHERE availability_days BETWEEN $1 AND $2;`,
-      [startDate, endDate]
-    );
-    if (startDate > endDate) {
+// const searchSittersbyDateRange = async (date_start, date_end) => {
+//   try {
+//     const startDate = await database.query(
+//       `SELECT * FROM sitters WHERE availability_dates @> ARRAY[$1]::date[];`,
+//       [date_start]
+//     );
+//     const endDate = await database.query(
+//       `SELECT * FROM sitters WHERE availability_dates @> ARRAY[$1]::date[];`,
+//       [date_end]
+//     );
+//     const availableSitters = await database.query(
+//       `SELECT * FROM sitters WHERE availability_days BETWEEN $1 AND $2;`,
+//       [startDate, endDate]
+//     );
+//     if (startDate > endDate) {
+//       res.json({message: "Start date should be earlier than end date. Please set your dates correctly!"})
+//     }
+//     return availableSitters.rows;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+// GET all available sitters by date range
+const searchSittersbyDateRange = async (start_date, end_date) => {
+  if (start_date > end_date) {
       res.json({message: "Start date should be earlier than end date. Please set your dates correctly!"})
     }
-    return availableSitters.rows;
-  } catch (error) {
-    console.error(error);
-  }
-};
+    // console.log("before calling");
+try {
+    const availableSitters = await database.query(
+      `WITH daterange AS (
+    SELECT generate_series($1::date, $2::date, interval '1 day')::date AS specific_date
+)
+SELECT *
+FROM sitters
+JOIN daterange ON daterange.specific_date = ANY(sitters.availability_dates)
+GROUP BY sitters.id, daterange.specific_date;`,
+      [start_date, end_date]
+  ); 
+  // console.log("available sitters", availableSitters);
+  return availableSitters.rows;
+} catch (error) {
+  console.error(error)
+} 
+
+}
 
 // UPDATE existing booking to accepted
 const updateBookingtoAccepted = async (id) => {
