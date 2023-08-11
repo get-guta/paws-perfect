@@ -11,4 +11,4 @@ INSERT INTO owners (first_name, last_name, email, sub_id, photo_url) VALUES ('Jo
 INSERT INTO owners (first_name, last_name, email, sub_id, photo_url) VALUES ('Merrily', 'Dibden', 'mdibden8@sitemeter.com', 'google-oauth2|113414376488412275429', 'https://randomuser.me/api/portraits/men/48.jpg');
 INSERT INTO owners (first_name, last_name, email, sub_id, photo_url) VALUES ('Berrie', 'Levicount', 'blevicount9@yahoo.co.jp', 'google-oauth2|113414376488412275430', 'https://randomuser.me/api/portraits/women/46.jpg');
 INSERT INTO owners (first_name, last_name, email, sub_id, photo_url) VALUES ('Jean', 'Pierre', 'jpniyitanga@gmail.com', 'google-oauth2|104903975863683407749', 'https://randomuser.me/api/portraits/men/93.jpg');
-INSERT INTO owners (first_name, last_name, email, sub_id, photo_url) VALUES ('Diane', 'Nolan', 'dnolanb@clickbank.net', 'google-oauth2|113414376488412275432', '"https://randomuser.me/api/portraits/women/15.jpg');
+INSERT INTO owners (first_name, last_name, email, sub_id, photo_url) VALUES ('Getenesh', 'Guta', 'getenesh.guta@gmail.com', 'google-oauth2|113414376488412275432', '"https://randomuser.me/api/portraits/women/15.jpg');

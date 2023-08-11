@@ -11,3 +11,5 @@ try {
 }
 
 };
+
+module.exports = {getPetsByOwnerId};

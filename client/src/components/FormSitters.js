@@ -54,7 +54,8 @@ function Register() {
             })
             .then((res)=>{
                 console.log(res)
-                alert("You already logged in")
+                {(res.status === 'ERROR') ? alert("You already logged in"): alert("Successfully Registered")}
+
             })
             // .catch((error)=> {
             //   console.log(error)

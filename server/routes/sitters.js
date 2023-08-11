@@ -40,7 +40,7 @@ router.put("/sitters/:id", async(req, res) => {
 /* REGISTER a sitter */
 router.post("/sitters/register", async (req, res) => {
   try {
-    //console.log("REQ", req.body.sub_id);
+    // console.log("REQ", req.body.sub_id);
     const existingSitter = await checkSitter(req.body.sub_id);
     if (existingSitter) {
       throw new Error("Sorry, this pet sitter already exists"); 

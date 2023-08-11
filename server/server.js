@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const morgan = require("morgan");
 const cors = require("cors");
+const session = require("express-session");
 const app = express();
 app.use(cors());
 
@@ -16,6 +17,10 @@ const ownersRoutes = require('./routes/owners');
 const sitterDetailRouter = require('./routes/sittersDetail');
 const sitterReviewRouter = require('./routes/sittersReviewListing');
 const bookingsRoute = require('./routes/bookings'); 
+const loginRoute = require('./routes/login');
+const bookingRequestsRoute = require('./routes/bookingRequest');
+const petRoute = require('./routes/pets');
+const updatebookingRoute = require('./routes/updateRequest');
 
 //Use Routers
 //app.use('/', usersRoutes);
@@ -23,9 +28,26 @@ const bookingsRoute = require('./routes/bookings');
 app.use('/sitters', sitterDetailRouter);
 app.use('/sitterreview',sitterReviewRouter);
 
-app.use('/api', bookingsRoute); // Use the bookings route
+app.use('/bookings', bookingsRoute); // Use the bookings route
+app.use('/api/login', loginRoute); // Use the bookings route
+app.use('/bookingrequest', bookingRequestsRoute);
+app.use('/pets', petRoute);
+app.use('/updatebooking', updatebookingRoute)
 
 
+
+
+app.use(
+  session({
+    secret: "your_session_secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      httpOnly: true,
+    },
+  })
+);
 
 
 //Use Routes
@@ -36,16 +58,6 @@ app.use('/', ownersRoutes);
 
 
 
-
-
-// axios
-//   .get("https://api.thecatapi.com/v1/images/0XYvRd7oD")
-//   .then((response) => {
-//     console.log(response);
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
 
 
 const port = process.env.PORT || 8080;

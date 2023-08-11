@@ -47,8 +47,8 @@ function MainNavBar() {
             Bookings
           </Button>
 
-          <Button bg="light" data-bs-theme="light" variant="light" href="/registration">
-            Register
+          <Button bg="light" data-bs-theme="light" variant="light" href="/jobs">
+            Jobs
           </Button>
 
           <Button
@@ -84,14 +84,27 @@ function MainNavBar() {
               </Button>
             </>
           ) : (
+            <>
+              <Button
+                bg="light"
+                data-bs-theme="light"
+                variant="light"
+                href="/registration"
+              >
+                Register
+              </Button>
             <Button
               bg="light"
               data-bs-theme="light"
               variant="light"
-              onClick={() => logout({ returnTo: window.location.origin })}
+                onClick={() => {
+                  logout({ returnTo: window.location.origin });
+                localStorage.removeItem("sub_id");
+                }}
             >
               Sign Out
             </Button>
+            </>
           )}
         </Nav>
       </Container>

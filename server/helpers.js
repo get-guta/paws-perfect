@@ -20,45 +20,39 @@ const getOwnerByEmail = async function (email) {
 
 const findSitterInBooking = async (sitter_id) => {
   try {
-    const sitter = await database
-      .query(`SELECT first_name, email FROM sitters WHERE id = $1;`, [sitter_id])
-      return res.rows[0];    
+    const sitter = await database.query(
+      `SELECT first_name, email FROM sitters WHERE id = $1;`,
+      [sitter_id]
+    );
+    return sitter;
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 };
 
 const findOwnerInBooking = async (owner_id) => {
   try {
     const owner = await database.query(
-      `SELECT first_name, email FROM owners WHERE id = $1;`,[owner_id]);
-    return res.rows[0];
+      `SELECT first_name, email FROM owners WHERE id = $1;`,
+      [owner_id]
+    );
+    return owner;
   } catch (error) {
     console.error(error);
   }
 };
 
 // when using this function in bookings route, remember to pass the receiver object as a parameter
-const sendNewBookingNotification = async (receiver) => {
-  // const { email, message } = data;
-  // const emailData = {
-  //   from: "jpniyitanga@gmail.com", // Replace with your email address (sender)
-  //   to: "nijepi@yahoo.fr",
-  //   subject: "Notification: You have a New Booking Request",
-  //   text: "Hello there",
-  // };  
+const sendNewBookingNotification = async (receiver) => {  
+  console.log(receiver);
   try {
-      const receiver = {
-      name: "John",
-      email: "jpniyitanga@gmail.com",
-    };
+    //   const receiver = {
+    //   name: "Test",
+    //   email: "amakuru2023@gmail.com",
+    // };
 
     await sgMail.send({
-      from: "Paws perfect <jpniyitanga@gmail.com>",
-      // to: receiver.email,
-      // subject: "You have a New Booking Request!",
-      // html: `Hello there ${receiver.name}, You have a new booking request! Please log into your account for more information!`,
-      // text: `Hello there ${receiver.name}, You have a new booking request! Please log into your account for more information! `,
+      from: "Paws perfect <jpniyitanga@gmail.com>",      
       templateId: "d-1684f89a209a4c4da69354a7f68febec",
       personalizations: [
         {
@@ -66,43 +60,134 @@ const sendNewBookingNotification = async (receiver) => {
         },
       ],
       dynamicTemplateData: {
-        name: `${receiver.name}`,
+        name: `${receiver.first_name}`,
         subject: "You have a New Booking Request!",
       },
     });
     console.log("Transactional email sent successfully");
   } catch (error) {
-      console.log(error.message.body.errors);
-    }     
+    console.log(error);
+  }
+};
+
+// when using this function in bookings route, remember to pass the receiver object as a parameter
+const sendAcceptedBookingNotification = async (receiver) => {  
+  console.log(receiver);
+  try {
+    //   const receiver = {
+    //   name: "Test",
+    //   email: "amakuru2023@gmail.com",
+    // };
+
+    await sgMail.send({
+      from: "Paws perfect <jpniyitanga@gmail.com>",      
+      templateId: "d-783898feaccf41c4bcbbec2cfa813a34",
+      personalizations: [
+        {
+          to: `<${receiver.email}>`,
+        },
+      ],
+      dynamicTemplateData: {
+        name: `${receiver.first_name}`,
+        subject: "Your Booking Has Been Accepted!",
+      },
+    });
+    console.log("Transactional email sent successfully");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// when using this function in bookings route, remember to pass the receiver object as a parameter
+const sendCompletedBookingNotification = async (receiver) => {  
+  console.log(receiver);
+  try {
+    //   const receiver = {
+    //   name: "Test",
+    //   email: "amakuru2023@gmail.com",
+    // };
+
+    await sgMail.send({
+      from: "Paws perfect <jpniyitanga@gmail.com>",
+      templateId: "d-2c4791701c624002a89e8049063e37de",
+      personalizations: [
+        {
+          to: `<${receiver.email}>`,
+        },
+      ],
+      dynamicTemplateData: {
+        name: `${receiver.first_name}`,
+        subject: "Don't Forget to Leave a Review",
+      },
+    });
+    console.log("Transactional email sent successfully");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// when using this function in bookings route, remember to pass the receiver object as a parameter
+const sendRejectedBookingNotification = async (receiver) => {  
+  console.log(receiver);
+  try {
+    //   const receiver = {
+    //   name: "Test",
+    //   email: "amakuru2023@gmail.com",
+    // };
+
+    await sgMail.send({
+      from: "Paws perfect <jpniyitanga@gmail.com>",
+      templateId: "d-870d39342e304bf287ebdfb036faa0cf",
+      personalizations: [
+        {
+          to: `<${receiver.email}>`,
+        },
+      ],
+      dynamicTemplateData: {
+        name: `${receiver.first_name}`,
+        subject: "Ooops, Your Booking Was Not Accepted",
+      },
+    });
+    console.log("Transactional email sent successfully");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // GET all available sitters by date range
-const searchSittersbyDateRange = async () => {
+const searchSittersbyDateRange = async (date_start, date_end) => {
   try {
     const startDate = await database.query(
-      `SELECT MIN($1) AS start_date
-FROM (
-  SELECT UNNEST(availability_days) AS date_element
-  FROM sitters 
-) subquery;`,
-      [date_element]
+      `SELECT * FROM sitters WHERE availability_dates @> ARRAY[$1]::date[];`,
+      [date_start]
     );
-
     const endDate = await database.query(
-      `SELECT MAX(data_element) AS end_date
-FROM (
-  SELECT UNNEST(availability_days) AS date_element
-  FROM sitters 
-) subquery;`,
-      [date_element]
+      `SELECT * FROM sitters WHERE availability_dates @> ARRAY[$1]::date[];`,
+      [date_end]
     );
     const availableSitters = await database.query(
-      `SELECT * FROM sitters WHERE availability_days BETWEEN $1 AND $2`,
+      `SELECT * FROM sitters WHERE availability_days BETWEEN $1 AND $2;`,
       [startDate, endDate]
     );
+    if (startDate > endDate) {
+      res.json({message: "Start date should be earlier than end date. Please set your dates correctly!"})
+    }
     return availableSitters.rows;
   } catch (error) {
-    console.error(error)
+    console.error(error);
+  }
+};
+
+// UPDATE existing booking to accepted
+const updateBookingtoAccepted = async (id) => {
+  try {
+    // const selectedBooking = await database.getBookingById(id);
+    const queryString = (`UPDATE bookings SET status="accepted WHERE id=$1;`, [id]);
+    
+    const updatedBooking = await database.query(queryString, values);
+    return updatedBooking.rows[0];
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -110,7 +195,7 @@ FROM (
 const getSitters = async () => {
   try {
     const sitters = await database.query("SELECT * FROM sitters");
-    console.log(sitters.rows)
+    console.log(sitters.rows);
     return sitters.rows;
   } catch (error) {
     console.error(error);
@@ -121,7 +206,9 @@ const getSitters = async () => {
 const getSitterById = async (id) => {
   try {
     const selectedSitter = await database.query(
-      `SELECT * FROM sitters WHERE id = $1`, [id]);
+      `SELECT * FROM sitters WHERE id = $1`,
+      [id]
+    );
     // console.log(selectedSitter.rows[0]);
     return selectedSitter.rows[0];
   } catch (error) {
@@ -132,7 +219,9 @@ const getSitterById = async (id) => {
 //GET sitters accepting cats only
 const catSitters = async () => {
   try {
-    const sitters = await database.query("SELECT * FROM sitters WHERE accepted_pet_type IN('cat')");
+    const sitters = await database.query(
+      "SELECT * FROM sitters WHERE accepted_pet_type IN('cat')"
+    );
     return sitters.rows;
   } catch (error) {
     console.error(error);
@@ -142,7 +231,9 @@ const catSitters = async () => {
 //GET sitters accepting dogs only
 const dogSitters = async () => {
   try {
-    const sitters = await database.query("SELECT * FROM sitters WHERE accepted_pet_type IN('dog')");
+    const sitters = await database.query(
+      "SELECT * FROM sitters WHERE accepted_pet_type IN('dog')"
+    );
     return sitters.rows;
   } catch (error) {
     console.error(error);
@@ -191,6 +282,7 @@ const getBookingBySitterId = async (sitter_id) => {
     p.name AS pet_name,
     p.description AS pet_description,
     p.type AS pet_type,
+    b.id,
     b.start_date AS booking_start_date,
     b.end_date AS booking_end_date,
     b.status
@@ -224,8 +316,8 @@ const createBooking = async (booking) => {
     booking.min,
     booking.max, 
     booking.status,
-    booking.sitter.pet_id,
-    booking.sitter.owner_id,
+    booking.pet_id,
+    booking.owner_id,
     booking.sitter.sitter_id
   ];
   const result = await database.query(query, values);
@@ -264,16 +356,33 @@ const checkSitter = async(sub_id) => {
   }
 }
 
+// UPDATE existing booking by id
+const updateBookingById = async (id, status) => {
+  try {
+    const queryString = `UPDATE bookings SET status=$1 WHERE id=$2`;
+    const values = [
+      status,
+      id
+    ];
+    const updatedBooking = await database.query(queryString, values);
+    return updatedBooking.rows[0];
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+
 module.exports = {
   sendNewBookingNotification,
   findOwnerInBooking,
-  findSitterInBooking,  
+  findSitterInBooking,
   getOwnerByEmail,
   getSitters,
   getSitterById,
   getBookingBySitterId,
   getSitterById,
-  createBooking,
+  // createBooking,
   searchSittersbyDateRange,
   dogSitters,
   catSitters,

@@ -52,20 +52,12 @@ const getBookingById = async (id) => {
 };
 
 // UPDATE existing booking by id
-const updateBookingById = async (id) => {
+const updateBookingById = async (id, status) => {
   try {
-    const booking = await database.getBookingById(id);
-    const queryString = `UPDATE bookings SET start_date=$1, end_date=$2, status=$3, sitter_review=$4, sitter_rating=$5, pet_id=$6, owner_id=$7, siter_id=$8 WHERE id=$9`;
+    const queryString = `UPDATE bookings SET status=$1 WHERE id=$2`;
     const values = [
-      booking.start_date,
-      booking.end_date,
-      booking.status,
-      booking.sitter_review,
-      booking.sitter_rating,
-      booking.pet_id,
-      booking.owner_id,
-      booking.sitter_id,
-      id,
+      status,
+      id
     ];
     const updatedBooking = await database.query(queryString, values);
     return updatedBooking.rows[0];
@@ -121,22 +113,22 @@ const updateBookingByOwnerId = async (owner_id, id) => {
 };
 
 // CREATE new booking
-const addBooking = async () => {
+const addBooking = async ({
+  start_date,
+  end_date,
+  status,
+  pet_id,
+  owner_id,
+  sitter_id
+}) => {
+  console.log(start_date, end_date)
   try {
     const queryString =
-      "INSERT INTO bookings (start_date, end_date, status, sitter_review, sitter_rating, pet_id, owner_id, sitter_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
-    const values = [
-      start_date,
-      end_date,
-      status,
-      sitter_review,
-      sitter_rating,
-      pet_id,
-      owner_id,
-      sitter_id,
-    ];
+      "INSERT INTO bookings (start_date, end_date, status, pet_id, owner_id, sitter_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
+    
+    const values = [start_date, end_date, status, pet_id, owner_id, sitter_id];
     const newBooking = await database.query(queryString, values);
-    return json(newBooking);
+    return newBooking.rows[0];
   } catch (error) {
     console.error(error);
   }

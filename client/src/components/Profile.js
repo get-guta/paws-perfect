@@ -9,21 +9,33 @@ const Profile = () => {
 
 
   useEffect(() => {
-    fetchUserInfo();  // Fetch user info from the backend
-  }, []);
+    console.log("from useeffect")
+    console.log("from useeffect", user)
+    const checkUser = async () => {
+      if(isAuthenticated){
+        try {
+          const response = await axios.post("http://localhost:8080/api/login", { user });
+          console.log(response)
+          
+          //redirect to homepahe
+  
+          //show relevant view based on user type
+  
+        } catch (error) {
+          if (error?.response?.status === 401) {
+            navigate("/register-owner");
+          }
+          console.error(error);
+        }
 
-  const fetchUserInfo = async () => {
-    try {
-      const response = await fetch('/api/userinfo'); // Replace with backend API endpoint
-      const data = await response.json();
-      setUserInfo(data);
-    } catch (error) {
-      console.error('Error fetching user info:', error);
-    }
-  };  
+      }
+     
+    };
+    checkUser()
+  }, [user])
 
   return(
-      <div class="profile">
+      <div className="profile">
          { isAuthenticated && (
 
             <article>

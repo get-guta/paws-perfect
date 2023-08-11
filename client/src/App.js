@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { useAuth0 } from '@auth0/auth0-react';
+import React, { Fragment, useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import Owners from "./components/Owners";
 import Sitters from "./components/Sitters";
 import LoginForm from "./components/LoginForm";
@@ -12,16 +12,20 @@ import Register from './components/Register';
 import FormOwners from './components/FormOwners';
 import FormSitters from './components/FormSitters';
 import Navbar from "react-bootstrap/Navbar";
-import PetSitterCalendar from './components/PetSitterCalendar'
+import PetSitterCalendar from "./components/PetSitterCalendar";
 
-
-
-
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, link } from "react-router-dom";
 
 function App() {
-  const { isloading } = useAuth0();
-  if (isloading) return <div>Loading...</div>
+  const { isloading, user } = useAuth0();
+
+  useEffect(() => {
+    if (user) { 
+      localStorage.setItem("sub_id", user?.sub);
+    }
+  }, [user]);
+
+  if (isloading) return <div>Loading...</div>;
   return (
     
     <Router>
