@@ -8,27 +8,23 @@ function Register() {
 
  return (
    <div className="Form">
-    {/* {console.log(user.sub)} */}
      <center>
        <h1>Register a new pet owner account</h1>
        <Formik
-         initialValues={{ accepted_pet_type: [""], description: ""}}
+         initialValues={{ pet_name:"", pet_image:"", pet_type: "", description: ""}}
          validate={(values) => {
            const errors = {};
 
-           if (!values.accepted_pet_type) {
-             errors.accepted_pet_type = "Required";
+           if (!values.pet_name) {
+            errors.pet_name = "Required";
+          }
+          if (!values.pet_type) {
+             errors.pet_type = "Required";
            } 
 
-          //  if (values.accepted_pet_type !== 'cat' && values.usertype !== 'dog') {
-          //   errors.accepted_pet_type = "Please write cat or dog";
-          // }
-
-        //    if (!values.availability_dates) {
-        //      errors.availability_dates = "Required";
-        //    }
            return errors;
          }}
+
          onSubmit={(values, { setSubmitting }) => {
           // setTimeout(() => {
             const newValues = { 
@@ -37,25 +33,24 @@ function Register() {
               email: user.email,
               sub_id: user.sub,
               photo_url: user.picture
-              // , ...values
+               , ...values
             } 
-            //console.log(values)
-            alert(JSON.stringify(newValues, null, 2));
+          //  alert(JSON.stringify(newValues, null, 2));
 
-          //   fetch("/owners/register",{
-          //     method: "POST",
-          //     headers: {
-          //       "Content-Type": "application/json",
-          //     },
-          //  body: JSON.stringify(newValues),
-          //   })
-          //   .then((res)=>{
-          //     return res.json()
-          //   })
-          //   .then((res)=>{
-          //       console.log(res)
-          //       alert("You already logged in")
-          //   })
+            fetch("/owners/register",{
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+           body: JSON.stringify(newValues),
+            })
+            .then((res)=>{
+              return res.json()
+            })
+            .then((res)=>{
+                console.log(res.status)
+                alert(res.body)
+            })
 
         }}
         
@@ -63,7 +58,7 @@ function Register() {
          {({ isSubmitting }) => (
            <Form>
             
-             what type of pet?<br/>
+             
              {/* <Field
                type="text"
                name="accepted_pet_type[0]"
@@ -76,8 +71,23 @@ function Register() {
                placeholder="cat or dog"
              />
              <ErrorMessage name="accepted_pet_type" component="div" /><br/> */}
-             
-             <FieldArray
+            What's the name of your pet?<br/>
+            <Field
+               type="text"
+               name="pet_name"
+               placeholder=""
+             />
+            <ErrorMessage name="pet_name" component="div" /><br/>
+
+             what type of pet?<br/>
+             <Field
+               type="text"
+               name="pet_type"
+               placeholder=""
+             />
+            <ErrorMessage name="pet_type" component="div" /><br/>
+
+             {/* <FieldArray
                type="text"
                name="accepted_pet_type"
                placeholder="cat or dog"
@@ -101,8 +111,10 @@ function Register() {
                  )
               }
             }
-             </FieldArray>
-             
+             </FieldArray> */}
+
+
+
              tell us about your pet?<br/>
              <Field 
               type="text" 
@@ -110,6 +122,16 @@ function Register() {
               placeholder="" 
             />
              <ErrorMessage name="description" component="div" /><br/>
+
+             Image url of your pet<br/>
+            <Field
+               type="text"
+               name="pet_image"
+               placeholder=""
+             />
+            <ErrorMessage name="pet_image" component="div" /><br/>
+            
+
          
              <button type="submit" disabled={isSubmitting}>
                Submit

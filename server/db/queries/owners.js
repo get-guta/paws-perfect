@@ -24,6 +24,19 @@ const getOwnerById = async (id) => {
   }
 };
 
+//Get owner id by sub_id
+const getOwnerBySub_Id = async (sub_id) => {
+  try {
+    const selectedOwner = await database.query(
+      `SELECT id FROM owners WHERE sub_id = $1`,
+      [sub_id]
+    );
+    return selectedOwner.rows[0];
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 //Get owner by email
 const getOwnerByEmail = async (email) => {
   try {
@@ -57,11 +70,38 @@ const updateOwnerById = async (id) => {
 
 //Need to confirm which input we get from user
 // Register new owner
-const addOwner = async (first_name, last_name, email, sub_id, photo_url) => {
+// const addOwner = async (first_name, last_name, email, sub_id, photo_url) => {
+//   try {
+//     const query =
+//       "INSERT INTO owners (first_name, last_name, email, sub_id, photo_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
+//     const values = [first_name, last_name, email, sub_id, photo_url];
+//     const newOwner = await database.query(query, values);
+//     return json(newOwner);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+// CREATE a new Owner
+const addOwner = async ({
+  first_name,
+  last_name,
+  photo_url,
+  email,
+  sub_id,
+  //accepted_pet_type
+  //availability_dates
+}) => {
   try {
     const query =
-      "INSERT INTO owners (first_name, last_name, email, sub_id, photo_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
-    const values = [first_name, last_name, email, sub_id, photo_url];
+      "INSERT INTO owners (first_name, last_name, photo_url, email, sub_id) VALUES ($1, $2, $3, $4, $5)";
+    const values = [
+      first_name,
+      last_name,
+      photo_url,
+      email,
+      sub_id
+    ];
     const newOwner = await database.query(query, values);
     return json(newOwner);
   } catch (error) {
@@ -69,4 +109,4 @@ const addOwner = async (first_name, last_name, email, sub_id, photo_url) => {
   }
 };
 
-module.exports = { addOwner, getOwners, getOwnerById, updateOwnerById, getOwnerByEmail };
+module.exports = { addOwner, getOwners, getOwnerById, updateOwnerById, getOwnerByEmail, getOwnerBySub_Id };

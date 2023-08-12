@@ -23,7 +23,7 @@ const Profile = () => {
   
         } catch (error) {
           if (error?.response?.status === 401) {
-            navigate("/register-owner");
+            navigate("/registration");
           }
           console.error(error);
         }

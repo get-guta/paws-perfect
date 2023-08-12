@@ -51,7 +51,7 @@ router.post("/sitters/register", async (req, res) => {
 
   } catch (error) {
     // console.error(error);
-    res.json({status: 'ERROR', body: 'USER EXISTS'});
+    res.json({status: 'ERROR', body: 'USER EXISTS'}); // body: error
   }
 });
 

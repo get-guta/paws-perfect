@@ -271,7 +271,33 @@ const addSitter = async ({
   }
 };
 
-
+// CREATE a new Owner
+const addOwner = async ({
+  first_name,
+  last_name,
+  photo_url,
+  email,
+  sub_id,
+  //accepted_pet_type
+  //availability_dates
+}) => {
+  try {
+    const query =
+      "INSERT INTO owners (first_name, last_name, photo_url, email, sub_id) VALUES ($1, $2, $3, $4, $5)";
+    const values = [
+      first_name,
+      last_name,
+      photo_url,
+      email,
+      sub_id
+    ];
+    console.log("TESTING ADDOWNER", query);
+    const newOwner = await database.query(query, values);
+    return json(newOwner);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // Get booking requests by sitter_id
 const getBookingBySitterId = async (sitter_id) => {
@@ -387,6 +413,7 @@ module.exports = {
   dogSitters,
   catSitters,
   addSitter,
+  addOwner,
   checkOwner,
   checkSitter
 

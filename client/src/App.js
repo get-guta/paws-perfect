@@ -33,7 +33,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/profile" element={<Profile />} />
-        {/* <Route path="/owners" element={<Owners />} /> */}
+        <Route path="/owners" element={<Owners />} />
         <Route path="/sitters" element={<Sitters />} />
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
