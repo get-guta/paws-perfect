@@ -1,0 +1,26 @@
+.Form-header {
+  background-image: url("../logo.png");
+  background-size: auto;
+  background-position: left;
+  background-repeat: no-repeat;
+  color: rgb(145, 139, 139);
+  padding: 100px;
+  text-align: center;
+  margin: 100px;
+}
+.custom-submit-button {
+  margin-top: 20px; /* Adjust margin as needed */
+}
+
+.register-links {
+  padding: 100px 100px;
+}
+
+.register-links h2 {
+  margin-bottom: 20px;
+}
+
+.register-links .btn-primary {
+  margin-top: 50px;
+  padding: 20px;
+}

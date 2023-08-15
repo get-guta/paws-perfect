@@ -45,7 +45,6 @@ app.use('/sitters', sitterDetailRouter);
 app.use('/sitterreview',sitterReviewRouter);
 app.use('/sitter', sitterAvailablityRoutes); // sitters functionality routes by G
 
-
 app.use('/bookings', bookingsRoute); // Use the bookings route
 app.use('/api/login', loginRoute); // Use the bookings route
 app.use('/bookingrequest', bookingRequestsRoute);
@@ -54,6 +53,19 @@ app.use('/updatebooking', updatebookingRoute)
 app.use("/bookings/send", sendMessageRoute);
 
 
+
+
+app.use(
+  session({
+    secret: "your_session_secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      httpOnly: true,
+    },
+  })
+);
 
 
 app.use(

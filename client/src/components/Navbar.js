@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PawsPerfectLogo from '../paws_perfect_logo.png';
 import { useAuth0 } from "@auth0/auth0-react";
+import Button from "react-bootstrap/Button";
+
 
 
 
@@ -23,6 +25,7 @@ function Navbar() {
           <li><a href="/contact" class="nav-link px-2 link-secondary">Contact Us</a></li>
         </ul>
 
+
         {!isAuthenticated ? (
 
           <div class="col-md-3 text-end">
@@ -43,15 +46,34 @@ function Navbar() {
             </button>
 
           </div>
+        // ) : (
+        //   <div class="col-md-3 text-end">
+        //     <button  
+        //       type="button" 
+        //       class="btn btn-outline-primary me-2" 
+        //       onClick={() => logout({ returnTo: window.location.origin })}
+        //   
         ) : (
-          <div class="col-md-3 text-end">
-            <button  
-              type="button" 
-              class="btn btn-outline-primary me-2" 
-              onClick={() => logout({ returnTo: window.location.origin })}
+          <div>
+            <Button
+              bg="light"
+              data-bs-theme="light"
+              variant="light"
+              href="/registration"
             >
+              Register
+            </Button>
+          <Button
+            bg="light"
+            data-bs-theme="light"
+            variant="light"
+              onClick={() => {
+                logout({ returnTo: window.location.origin });
+              localStorage.removeItem("sub_id");
+              }}
+        >
               Sign out
-            </button>
+            </Button>
 
           </div>
 

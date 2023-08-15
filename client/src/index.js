@@ -24,7 +24,6 @@ root.render(
       domain={domain}
       clientId={clientId}
       redirectUri={window.location.origin}
-      // redirectUri={"http://localhost:8080/auth_callback"}
     >
       <App />
     </Auth0Provider>

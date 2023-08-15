@@ -10,7 +10,6 @@ const { updateBookingById, sendAcceptedBookingNotification, findOwnerInBooking, 
 /* UPDATE booking by id. */
 
 router.post("/", async (req, res) => {
-
   try {
     const id = req.body.reqid;
     const status = req.body.status;

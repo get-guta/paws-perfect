@@ -316,8 +316,66 @@ const updateSitterById = async (userId) => {
   } catch (error) {
     console.error(error);
   }
+}
+//Need to confirm how to get input from user/form
+// CREATE a new sitter
+const addSitter = async ({
+  first_name,
+  last_name,
+  photo_url,
+  email,
+  sub_id,
+  accepted_pet_type
+  //availability_dates
+}) => {
+  try {
+    const query =
+      "INSERT INTO sitters (first_name, last_name, photo_url, email, sub_id, accepted_pet_type) VALUES ($1, $2, $3, $4, $5, $6)";
+    const values = [
+      first_name,
+      last_name,
+      photo_url,
+      email,
+      sub_id,
+      accepted_pet_type,
+      availability_dates,
+
+    ];
+    console.log("TESTING ADDSITTER", query);
+    const newSitter = await database.query(query, values);
+    return json(newSitter);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
+// CREATE a new Owner
+const addOwner = async ({
+  first_name,
+  last_name,
+  photo_url,
+  email,
+  sub_id,
+  //accepted_pet_type
+  //availability_dates
+}) => {
+  try {
+    const query =
+      "INSERT INTO owners (first_name, last_name, photo_url, email, sub_id) VALUES ($1, $2, $3, $4, $5)";
+    const values = [
+      first_name,
+      last_name,
+      photo_url,
+      email,
+      sub_id
+    ];
+    console.log("TESTING ADDOWNER", query);
+    const newOwner = await database.query(query, values);
+    return json(newOwner);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // Get booking requests by sitter_id
 const getBookingBySitterId = async (sitter_id) => {
@@ -373,6 +431,36 @@ const createBooking = async (booking) => {
   return result.rows[0];
 }
 
+// Function to check if a user in either table
+const checkOwner = async(sub_id) => {  
+  try {    
+
+    // Search for the user in owners table
+    let result = await database.query(`SELECT * FROM owners WHERE sub_id = $1`, [sub_id]);
+    // console.log("Result from owners table", result);
+    if (result.rowCount > 0) {
+      throw new Error("Sorry, this pet owner already exists");  
+    }     
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const checkSitter = async(sub_id) => {  
+  try {    
+
+    // Search for the user in owners table
+    let result = await database.query(`SELECT * FROM sitters WHERE sub_id = $1`, [sub_id]);
+    // console.log("Result from owners table", result);
+    if (result.rowCount > 0) {
+      return result.rows[0];  
+    }     
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
 
 // UPDATE existing booking by id
 const updateBookingById = async (id, status) => {
@@ -404,9 +492,14 @@ module.exports = {
   getSitterById,
   getBookingBySitterId,
   getSitterById,
-  createBooking,
+  // createBooking,
   searchSittersbyDateRange,
   dogSitters,
   catSitters,
-  updateBookingById
+  updateBookingById,
+  addSitter,
+  addOwner,
+  checkOwner,
+  checkSitter
+
 };

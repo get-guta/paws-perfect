@@ -28,7 +28,6 @@ function SitterDetailsForm(props) {
       max: max
     };
 
-
     // console.log("new booking", newBooking); 
 
     try {

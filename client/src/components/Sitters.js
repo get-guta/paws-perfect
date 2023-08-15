@@ -74,7 +74,6 @@ function Sitters() {
   const handleChat = async (request) => {
     // Implement your chat logic here
 
-
     console.log('Chat with owner:', request);
   };
 
@@ -170,6 +169,7 @@ function Sitters() {
   };
 
   return (
+
     <>
       <Navbar />
 
