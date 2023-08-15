@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 import dateFormater from '../util';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import Footer from './Footer';
 
 function Sitters() {
   const user = localStorage.getItem("user");
@@ -258,6 +259,7 @@ function Sitters() {
         </div>
 
       </div>
+      <Footer/>
     </>
   );
 }
