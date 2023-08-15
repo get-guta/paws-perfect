@@ -59,12 +59,14 @@ function Navbar() {
               bg="light"
               data-bs-theme="light"
               variant="light"
+              class="btn btn-outline-primary me-2"
               href="/registration"
             >
               Register
             </Button>
           <Button
             bg="light"
+            class="btn btn-outline-primary me-2"
             data-bs-theme="light"
             variant="light"
               onClick={() => {

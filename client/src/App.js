@@ -14,17 +14,18 @@ import FormSitters from './components/FormSitters';
 import RegisterPage from "./components/RegisterPage";
 
 import HomepageImage from "./images/homepage.jpg";
-
-//import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import SitterDetailsForm from "./components/SitterDetailsForm";
 
-// const ProtectedRoute = ({ children }) => {
-//     const localUser = localStorage.getItem("user");
-//     return localUser ? children : <Navigate to="/" />;
-// };
 import Navbar from "react-bootstrap/Navbar";
 import PetSitterCalendar from "./components/PetSitterCalendar";
+
+const ProtectedRoute = ({ children }) => {
+    const localUser = localStorage.getItem("user");
+    return localUser ? children : <Navigate to="/" />;
+};
+
+
 
 
 function App() {
@@ -46,31 +47,31 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/profile" element={<Profile />} />
          {/* <Route path="/register" element={<RegisterPage />} /> */}
-        {/* <Route
+        <Route path="/registration" element={<Register />} />
+        <Route
           path="/sitters"
           element={
             <ProtectedRoute>
               <Sitters />
             </ProtectedRoute>
           }
-        /> */}
-        <Route path="/owners" element={<Owners />} />
-        <Route path="/sitters" element={<Sitters />} />
+        />
+        {/* <Route path="/sitters" element={<Sitters />} /> */}
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
-
         <Route path="/bookings" element={<Bookings />} />
         <Route path="/registration" element={<Register />} />
         <Route path="/register-owner" element={<FormOwners />} />
         <Route path="/register-sitter" element={<FormSitters />} />
-        {/* <Route
+        {/* <Route path="/owners" element={<Owners />} /> */}
+        <Route
           path="/owners"
           element={
             <ProtectedRoute>
               <PetSitterCalendar />
             </ProtectedRoute>
           }
-        /> */}
+        />
       </Routes>
     </Router>
   );
