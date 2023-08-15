@@ -1,7 +1,8 @@
 .Form-header {
-  background-image: url("../logo.svg");
-  background-size: cover;
-  background-position: center;
+  background-image: url("../logo.png");
+  background-size: auto;
+  background-position: left;
+  background-repeat: no-repeat;
   color: rgb(145, 139, 139);
   padding: 100px;
   text-align: center;

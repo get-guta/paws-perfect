@@ -2,10 +2,14 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 import "../css/Forms.css"
 
 function Register() {
   const { user, isAuthenticated } = useAuth0();
+  const navigate = useNavigate();
+
 
   return (
     <div className="Form">
@@ -58,6 +62,7 @@ function Register() {
                 } else {
                   alert("Successfully Registered");
                 }
+                navigate("/");
               });
           }}
         >
