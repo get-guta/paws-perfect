@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import Navbar from "./Navbar";
 import "../css/Forms.css"
 
 
@@ -25,6 +26,7 @@ const Register = () => {
 
   return (
     <div>
+      <Navbar />
        <div className="Form-header"> 
       <h1>Registeration</h1> 
       </div>

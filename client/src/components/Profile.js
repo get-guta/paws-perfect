@@ -20,11 +20,12 @@ const Profile = () => {
                     } else if (response.data.role === "owner") {
                       localStorage.setItem('user', JSON.stringify(response.data)); // Store user in session storage
                         navigate("/owners"); // Navigate to owners route
-                    }
+                    } 
                 } catch (error) {
                     if (error.response && error.response.status === 401) {
                         console.error("Unauthorized user");
                         // Handle error or show message to the user
+                        navigate("/registration")
                     } else {
                         console.error(error);
                     }

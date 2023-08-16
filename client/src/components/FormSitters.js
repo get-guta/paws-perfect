@@ -13,6 +13,7 @@ function Register() {
 
   return (
     <div className="Form">
+            <Navbar />
     <div className="Form-header">        
       <h1>Register a new petsitter account</h1>
     </div>

@@ -1,12 +1,12 @@
 .Form-header {
-  background-image: url("../logo.png");
+  /* background-image: url("../logo.png"); */
   background-size: auto;
   background-position: left;
   background-repeat: no-repeat;
   color: rgb(145, 139, 139);
-  padding: 100px;
+  padding: 40px;
   text-align: center;
-  margin: 100px;
+  margin: 40px;
 }
 .custom-submit-button {
   margin-top: 20px; /* Adjust margin as needed */

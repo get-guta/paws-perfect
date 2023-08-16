@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 import "../css/Forms.css"
 
 function Register() {
@@ -12,6 +13,7 @@ function Register() {
 
   return (
     <div className="Form">
+            <Navbar />
       <div className="Form-header"> 
       <h1>Register a new pet owner account</h1> 
       </div>
