@@ -46,38 +46,40 @@ function Navbar() {
             </button>
 
           </div>
-        // ) : (
-        //   <div class="col-md-3 text-end">
-        //     <button  
-        //       type="button" 
-        //       class="btn btn-outline-primary me-2" 
-        //       onClick={() => logout({ returnTo: window.location.origin })}
-        //   
         ) : (
-          <div>
-            <Button
-              bg="light"
-              data-bs-theme="light"
-              variant="light"
-              class="btn btn-outline-primary me-2"
-              href="/registration"
-            >
-              Register
-            </Button>
-          <Button
-            bg="light"
-            class="btn btn-outline-primary me-2"
-            data-bs-theme="light"
-            variant="light"
-              onClick={() => {
-                logout({ returnTo: window.location.origin });
-              localStorage.removeItem("sub_id");
-              }}
-        >
-              Sign out
-            </Button>
 
+          <div class="col-md-3 text-end">
+            <button  
+              type="button" 
+              class="btn btn-outline-primary me-2" 
+              onClick={() => logout({ returnTo: window.location.origin })}
+          > Sign out </button>
           </div>
+
+        //   <div>
+        //     <Button
+        //       bg="light"
+        //       data-bs-theme="light"
+        //       variant="light"
+        //       class="btn btn-outline-primary me-2"
+        //       href="/registration"
+        //     >
+        //       Register
+        //     </Button>
+        //   <Button
+        //     bg="light"
+        //     class="btn btn-outline-primary me-2"
+        //     data-bs-theme="light"
+        //     variant="light"
+        //       onClick={() => {
+        //         logout({ returnTo: window.location.origin });
+        //       localStorage.removeItem("sub_id");
+        //       }}
+        // >
+        //       Sign out
+        //     </Button>
+            
+        //   </div>
 
         )}
       </header>

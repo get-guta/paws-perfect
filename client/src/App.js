@@ -12,6 +12,7 @@ import Register from './components/Register';
 import FormOwners from './components/FormOwners';
 import FormSitters from './components/FormSitters';
 import RegisterPage from "./components/RegisterPage";
+//import { findUser } from "../../server/db/queries/users";
 
 import HomepageImage from "./images/homepage.jpg";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
@@ -40,13 +41,15 @@ function App() {
   }, [user]);
 
   if (isloading) return <div>Loading...</div>;
+  
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/profile" element={<Profile />} />
-         {/* <Route path="/register" element={<RegisterPage />} /> */}
+         <Route path="/register" element={<RegisterPage />} />
         <Route path="/registration" element={<Register />} />
         <Route
           path="/sitters"
