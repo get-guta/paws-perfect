@@ -56,7 +56,7 @@ function Navbar() {
         ) : (
           <div class="col-3 text-end">
             <h5>
-              {/* Hello {user.given_name}! &nbsp; */}
+              Hello {user.given_name}! &nbsp;&nbsp;&nbsp;
               <span>
                 <button
                   type="button"
